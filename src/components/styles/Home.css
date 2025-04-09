@@ -1,0 +1,310 @@
+/* Home page styles */
+.hero-section {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  color: #6b7280;
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  animation: fadeIn 0.5s ease-in-out 0.2s both;
+}
+
+/* QR Code section */
+.home-qr-section {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out 0.3s both;
+}
+
+.qr-section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.qr-codes-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .qr-codes-grid {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+  }
+}
+
+.main-qr {
+  flex-shrink: 0;
+}
+
+.levels-qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Level cards */
+.levels-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .levels-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.level-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease-in-out;
+  animation-fill-mode: both;
+}
+
+.level-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Apply staggered animation delay to each card */
+.level-card:nth-child(1) {
+  animation-delay: 0.4s;
+}
+
+.level-card:nth-child(2) {
+  animation-delay: 0.6s;
+}
+
+.level-card:nth-child(3) {
+  animation-delay: 0.8s;
+}
+
+.level-card-header {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.level-card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.level-card-description {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.level-1-header {
+  background-color: #ecfdf5;
+}
+
+.level-2-header {
+  background-color: #eff6ff;
+}
+
+.level-3-header {
+  background-color: #f5f3ff;
+}
+
+.start-button {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.start-button:hover {
+  transform: translateY(-2px);
+}
+
+.level-1-button {
+  background-color: #10b981;
+}
+
+.level-1-button:hover {
+  background-color: #059669;
+}
+
+.level-2-button {
+  background-color: #3b82f6;
+}
+
+.level-2-button:hover {
+  background-color: #fff;
+}
+
+.level-3-button {
+  background-color: #8b5cf6;
+}
+
+.level-3-button:hover {
+  background-color: #fff;
+}
+
+.level-card-body {
+  padding: 1rem 1.5rem;
+}
+
+.level-features-title {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.level-features-list {
+  list-style: none;
+}
+
+.level-feature-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.level-1-icon {
+  color: #10b981;
+}
+
+.level-2-icon {
+  color: #3b82f6;
+}
+
+.level-3-icon {
+  color: #8b5cf6;
+}
+
+/* How to use section */
+.how-to-use-section {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  animation: fadeIn 0.5s ease-in-out 1s both;
+}
+
+.how-to-use-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.step-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.step-1-icon {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.step-2-icon {
+  background-color: #d1fae5;
+  color: #10b981;
+}
+
+.step-3-icon {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.step-4-icon {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.step-content {
+  flex-grow: 1;
+}
+
+.step-title {
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.step-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

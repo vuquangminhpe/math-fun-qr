@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   // Cho phép CORS cho tài nguyên tĩnh
   async headers() {
     return [

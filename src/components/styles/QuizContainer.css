@@ -1,0 +1,273 @@
+/* Quiz container styles */
+.quiz-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Question indicators */
+.question-indicators {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.indicator {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.indicator:hover {
+  transform: scale(1.2);
+  background-color: #d1d5db;
+}
+
+.indicator.active {
+  background-color: #3b82f6;
+}
+
+.indicator.answered {
+  background-color: #93c5fd;
+}
+
+/* Submit button */
+.submit-container {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.submit-button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.submit-button.active {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.submit-button.active:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.submit-button.disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Result card */
+.result-card {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 2rem;
+  max-width: 32rem;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.result-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.result-score {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #3b82f6;
+  margin-bottom: 2rem;
+}
+
+.result-feedback {
+  background-color: #eff6ff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.result-message {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-accuracy {
+  color: #6b7280;
+}
+
+/* Result details */
+.result-details {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.result-subtitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.result-questions-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+  gap: 0.5rem;
+}
+
+.result-question-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f9fafb;
+}
+
+.result-question-item.correct {
+  background-color: #ecfdf5;
+}
+
+.result-question-item.incorrect {
+  background-color: #fee2e2;
+}
+
+.result-question-number {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.result-question-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.result-icon.correct {
+  color: #10b981;
+}
+
+.result-icon.incorrect {
+  color: #ef4444;
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.result-button {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.restart-button {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.restart-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+.home-button {
+  background-color: #f3f4f6;
+  color: #1f2937;
+  text-decoration: none;
+}
+
+.home-button:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-2px);
+}
+
+/* Loading state */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16rem;
+}
+
+.loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 0.25rem solid #e5e7eb;
+  border-top: 0.25rem solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation for question container */
+.question-container {
+  position: relative;
+  min-height: 20rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

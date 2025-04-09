@@ -1,87 +1,72 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
+import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 
-interface Star {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  rotate: number;
-  delay: number;
-  duration: number;
-  color: string;
+interface StarsProps {
+  duration?: number;
 }
 
-const Stars: React.FC = () => {
-  const [stars, setStars] = useState<Star[]>([]);
+const Stars: React.FC<StarsProps> = ({ duration = 2000 }) => {
+  const [animationData, setAnimationData] = useState<any>(null);
 
+  // Tải animation JSON khi component được render
   useEffect(() => {
-    const colors = [
-      "#FFD166", // Vàng
-      "#FF9F1C", // Cam
-      "#41B3A3", // Xanh lá
-      "#D58BDD", // Tím
-    ];
+    fetch("/animations/stars.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setAnimationData(data);
 
-    // Tạo ngẫu nhiên 20 ngôi sao
-    const newStars = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100, // vị trí ngang (%)
-      y: Math.random() * 100, // vị trí dọc (%)
-      size: Math.random() * 30 + 10, // kích thước (px)
-      rotate: Math.random() * 360, // góc xoay (độ)
-      delay: Math.random() * 0.5, // độ trễ (s)
-      duration: Math.random() * 0.5 + 0.5, // thời gian hiệu ứng (s)
-      color: colors[Math.floor(Math.random() * colors.length)],
-    }));
+        // Tự động xóa sau khoảng thời gian duration
+        const timer = setTimeout(() => {
+          setAnimationData(null);
+        }, duration);
 
-    setStars(newStars);
+        return () => clearTimeout(timer);
+      })
+      .catch((error) => console.error("Error loading animation:", error));
+  }, [duration]);
 
-    // Tự động xóa sao sau 2 giây
-    const timer = setTimeout(() => {
-      setStars([]);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // SVG cho hình ngôi sao
-  const starPath =
-    "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
+  // Nếu không có dữ liệu animation, không hiển thị gì
+  if (!animationData) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-10 overflow-hidden">
-      {stars.map((star) => (
-        <motion.div
-          key={star.id}
-          className="absolute"
-          style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-          }}
-          initial={{ scale: 0, rotate: 0, opacity: 0 }}
-          animate={{
-            scale: [0, 1.2, 1],
-            rotate: star.rotate,
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: star.duration,
-            delay: star.delay,
-            ease: "easeOut",
-          }}
-        >
-          <svg
-            width={star.size}
-            height={star.size}
-            viewBox="0 0 24 24"
-            fill={star.color}
-          >
-            <path d={starPath} />
-          </svg>
-        </motion.div>
-      ))}
-    </div>
+    <motion.div
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="relative w-full h-full">
+        {/* Phân bố ngẫu nhiên 6 animation sao trên toàn màn hình */}
+        {[...Array(6)].map((_, index) => {
+          // Tính vị trí ngẫu nhiên cho mỗi animation
+          const top = `${Math.random() * 80 + 10}%`;
+          const left = `${Math.random() * 80 + 10}%`;
+          const size = Math.random() * 100 + 100; // Kích thước từ 100px đến 200px
+
+          return (
+            <div
+              key={index}
+              className="absolute"
+              style={{
+                top,
+                left,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Lottie
+                animationData={animationData}
+                loop={true}
+                autoplay={true}
+                style={{ width: size, height: size }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </motion.div>
   );
 };
 

@@ -1,9 +1,8 @@
-import "@/styles/globals.css";
+import "../components/styles/globals.css";
 import type { AppProps } from "next/app";
-import { AnimatePresence } from "framer-motion";
 import Head from "next/head";
 
-export default function App({ Component, pageProps, router }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
@@ -16,7 +15,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
           name="keywords"
           content="toán tiểu học, học toán, toán có lời văn, toán vui"
         />
-        <meta name="theme-color" content="#FF9F1C" />
+        <meta name="theme-color" content="#3b82f6" />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
@@ -39,11 +38,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
         />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
-
-      {/* AnimatePresence cho phép animation khi chuyển trang */}
-      <AnimatePresence mode="wait">
-        <Component {...pageProps} key={router.route} />
-      </AnimatePresence>
+      <Component {...pageProps} />
     </>
   );
 }

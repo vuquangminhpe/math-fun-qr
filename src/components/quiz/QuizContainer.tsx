@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Question as QuestionType } from "@/types";
 import Question from "./Question";
 import { getRandomQuestions } from "@/data/questionService";
-import { motion, AnimatePresence } from "framer-motion";
-import Bubbles from "../animations/Bubbles";
-import Stars from "../animations/Stars";
-import Confetti from "../animations/Confetti";
+import "../styles/QuizContainer.css";
+import Link from "next/link";
 
 interface QuizContainerProps {
   level: number;
@@ -14,19 +12,15 @@ interface QuizContainerProps {
 
 const QuizContainer: React.FC<QuizContainerProps> = ({
   level,
-  questionsCount = 5,
+  questionsCount = 10, // Tăng số lượng câu hỏi lên 10
 }) => {
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(true);
-
-  // Animation states
-  const [showBubbles, setShowBubbles] = useState(false);
-  const [showStars, setShowStars] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
-  const [playSound, setPlaySound] = useState("");
+  const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false);
 
   // Lấy câu hỏi khi component được tạo
   useEffect(() => {
@@ -35,44 +29,66 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
       const fetchedQuestions = getRandomQuestions(level, questionsCount);
       setQuestions(fetchedQuestions);
       setCurrentQuestionIndex(0);
+      setUserAnswers({});
       setScore(0);
       setShowResult(false);
+      setAllQuestionsAnswered(false);
       setLoading(false);
     };
 
     loadQuestions();
   }, [level, questionsCount]);
 
-  // Xử lý khi người dùng trả lời câu hỏi
-  const handleAnswer = (answerId: string, isCorrect: boolean) => {
-    if (isCorrect) {
-      setScore((prevScore) => prevScore + 1);
-
-      // Hiệu ứng âm thanh và hình ảnh khi trả lời đúng
-      if (Math.random() > 0.5) {
-        setShowBubbles(true);
-      } else {
-        setShowStars(true);
-      }
-
-      setPlaySound("correct");
-    } else {
-      setPlaySound("wrong");
+  // Kiểm tra khi tất cả câu hỏi đã được trả lời
+  useEffect(() => {
+    if (questions.length > 0) {
+      const allAnswered = questions.every(
+        (q) => userAnswers[q.id] !== undefined
+      );
+      setAllQuestionsAnswered(allAnswered);
     }
+  }, [userAnswers, questions]);
 
-    // Chuyển sang câu hỏi tiếp theo sau 1.5 giây
-    setTimeout(() => {
-      setShowBubbles(false);
-      setShowStars(false);
+  // Xử lý khi người dùng trả lời câu hỏi
+  const handleAnswer = (questionId: string, answerId: string) => {
+    // Lưu câu trả lời của người dùng nhưng chưa tính điểm
+    setUserAnswers((prev) => ({
+      ...prev,
+      [questionId]: answerId,
+    }));
 
-      if (currentQuestionIndex < questions.length - 1) {
+    // Tự động chuyển sang câu hỏi tiếp theo nếu chưa phải câu cuối
+    if (currentQuestionIndex < questions.length - 1) {
+      setTimeout(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      } else {
-        setShowResult(true);
-        setShowConfetti(true);
-        setPlaySound("applause");
+      }, 500);
+    }
+  };
+
+  // Tính điểm khi hoàn thành
+  const calculateScore = () => {
+    let newScore = 0;
+
+    questions.forEach((question) => {
+      const userAnswerId = userAnswers[question.id];
+      if (userAnswerId) {
+        const selectedAnswer = question.answers.find(
+          (a) => a.id === userAnswerId
+        );
+        if (selectedAnswer && selectedAnswer.isCorrect) {
+          newScore += 1;
+        }
       }
-    }, 1500);
+    });
+
+    return newScore;
+  };
+
+  // Hiển thị kết quả
+  const showFinalResult = () => {
+    const finalScore = calculateScore();
+    setScore(finalScore);
+    setShowResult(true);
   };
 
   // Xử lý khi bắt đầu làm lại bài
@@ -80,109 +96,165 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     const newQuestions = getRandomQuestions(level, questionsCount);
     setQuestions(newQuestions);
     setCurrentQuestionIndex(0);
+    setUserAnswers({});
     setScore(0);
     setShowResult(false);
-    setShowConfetti(false);
+    setAllQuestionsAnswered(false);
   };
 
-  // Hiệu ứng âm thanh
-  useEffect(() => {
-    if (playSound) {
-      const audio = new Audio(`/sounds/${playSound}.mp3`);
-      audio
-        .play()
-        .catch((error) => console.error("Failed to play sound:", error));
-      setPlaySound("");
-    }
-  }, [playSound]);
+  // Xử lý khi chọn câu hỏi cụ thể từ thanh chỉ báo
+  const handleSelectQuestion = (index: number) => {
+    setCurrentQuestionIndex(index);
+  };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="loader ease-linear rounded-full border-8 border-t-8 border-primary h-16 w-16"></div>
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
       </div>
     );
   }
 
   // Hiển thị kết quả
   if (showResult) {
+    const accuracy = Math.round((score / questions.length) * 100);
+
     return (
-      <motion.div
-        className="bg-white bg-opacity-90 rounded-3xl p-8 shadow-card w-full max-w-2xl mx-auto text-center relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {showConfetti && <Confetti />}
+      <div className="result-card">
+        <h2 className="result-title">Kết quả của bạn</h2>
 
-        <h2 className="text-3xl font-comic text-primary-dark mb-4">Kết quả</h2>
-
-        <div className="text-5xl font-bold text-accent mb-6">
+        <div className="result-score">
           {score}/{questions.length}
         </div>
 
-        <div className="mb-8">
-          <p className="text-xl mb-4">
+        <div className="result-feedback">
+          <p className="result-message">
             {score === questions.length
               ? "Tuyệt vời! Bạn đã trả lời đúng tất cả các câu hỏi!"
               : score >= questions.length / 2
               ? "Khá tốt! Hãy tiếp tục cố gắng nhé!"
               : "Hãy cố gắng luyện tập thêm nhé!"}
           </p>
+          <p className="result-accuracy">Chính xác: {accuracy}%</p>
+        </div>
 
-          <div className="mt-6 flex justify-center space-x-4">
-            <motion.button
-              className="bg-primary text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:bg-primary-dark transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleRestart}
-            >
-              Làm lại
-            </motion.button>
+        {/* Chi tiết từng câu hỏi */}
+        <div className="result-details">
+          <h3 className="result-subtitle">Chi tiết câu trả lời:</h3>
+          <div className="result-questions-list">
+            {questions.map((question, index) => {
+              const userAnswerId = userAnswers[question.id];
+              const selectedAnswer = question.answers.find(
+                (a) => a.id === userAnswerId
+              );
+              const isCorrect = selectedAnswer?.isCorrect || false;
 
-            <motion.a
-              href="/"
-              className="bg-secondary text-white font-bold py-3 px-6 rounded-xl shadow-lg hover:bg-secondary-dark transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Về trang chủ
-            </motion.a>
+              return (
+                <div
+                  key={question.id}
+                  className={`result-question-item ${
+                    isCorrect ? "correct" : "incorrect"
+                  }`}
+                >
+                  <div className="result-question-number">Câu {index + 1}</div>
+                  <div className="result-question-status">
+                    {isCorrect ? (
+                      <svg
+                        className="result-icon correct"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        className="result-icon incorrect"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-      </motion.div>
+
+        <div className="result-actions">
+          <button
+            className="result-button restart-button"
+            onClick={handleRestart}
+          >
+            Làm lại
+          </button>
+          <Link href="/" passHref>
+            <a className="result-button home-button">Về trang chủ</a>
+          </Link>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div className="relative">
-      {/* Hiệu ứng bong bóng và sao */}
-      {showBubbles && <Bubbles />}
-      {showStars && <Stars />}
-
+    <div className="quiz-container">
       {/* Hiển thị câu hỏi hiện tại */}
-      <AnimatePresence mode="wait">
+      <div className="question-container">
         <Question
-          key={questions[currentQuestionIndex]?.id}
           question={questions[currentQuestionIndex]}
-          onAnswer={handleAnswer}
+          onAnswer={(answerId) =>
+            handleAnswer(questions[currentQuestionIndex].id, answerId)
+          }
           questionNumber={currentQuestionIndex + 1}
           totalQuestions={questions.length}
+          userSelectedAnswer={userAnswers[questions[currentQuestionIndex]?.id]}
         />
-      </AnimatePresence>
+      </div>
 
-      {/* Hiển thị thanh tiến trình */}
-      <div className="mt-8 bg-white bg-opacity-50 rounded-full h-4 w-full max-w-2xl mx-auto overflow-hidden">
-        <motion.div
-          className="h-4 bg-primary rounded-full"
-          initial={{
-            width: `${(currentQuestionIndex / questions.length) * 100}%`,
-          }}
-          animate={{
-            width: `${((currentQuestionIndex + 1) / questions.length) * 100}%`,
-          }}
-          transition={{ duration: 0.5 }}
-        />
+      {/* Question indicators */}
+      <div className="question-indicators">
+        {questions.map((_, index) => (
+          <button
+            key={index}
+            className={`indicator ${
+              index === currentQuestionIndex
+                ? "active"
+                : userAnswers[questions[index]?.id]
+                ? "answered"
+                : ""
+            }`}
+            onClick={() => handleSelectQuestion(index)}
+            aria-label={`Câu hỏi ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Button nộp bài và xem kết quả */}
+      <div className="submit-container">
+        <button
+          className={`submit-button ${
+            allQuestionsAnswered ? "active" : "disabled"
+          }`}
+          onClick={showFinalResult}
+          disabled={!allQuestionsAnswered}
+        >
+          {allQuestionsAnswered
+            ? "Nộp bài và xem kết quả"
+            : "Vui lòng trả lời tất cả câu hỏi"}
+        </button>
       </div>
     </div>
   );

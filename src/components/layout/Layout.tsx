@@ -1,48 +1,26 @@
 import React, { ReactNode } from "react";
 import Head from "next/head";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import "../styles/Layout.css";
 
 interface LayoutProps {
   children: ReactNode;
   title?: string;
-  backgroundColor?: string;
-  backgroundImage?: string;
   level?: number;
+  showHomeButton?: boolean;
 }
 
 const Layout: React.FC<LayoutProps> = ({
   children,
   title = "Toán Vui Tiểu Học",
-  backgroundColor = "bg-background",
-  backgroundImage,
   level,
+  showHomeButton = true,
 }) => {
-  // Xác định lớp gradient tương ứng với level
-  const gradientClass = level
-    ? `level-${level}-gradient`
-    : "bg-gradient-to-br from-background-light via-background to-background-dark";
-
-  // Animation variants
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  // Set level theme class
+  const levelThemeClass = level ? `level-${level}-theme` : "";
 
   return (
-    <div className={`min-h-screen ${backgroundColor} ${gradientClass}`}>
+    <div className={`layout ${levelThemeClass}`}>
       <Head>
         <title>{title}</title>
         <meta
@@ -52,89 +30,64 @@ const Layout: React.FC<LayoutProps> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <motion.main
-        className="container mx-auto px-4 py-8 min-h-screen"
-        style={{
-          backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundBlendMode: "soft-light",
-        }}
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-      >
-        <div className="flex flex-col items-center">
-          <motion.header
-            className="w-full max-w-4xl mb-8 text-center"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h1 className="text-4xl md:text-5xl font-comic font-bold mb-2">
-              {title}
-            </h1>
-            {level && (
-              <div
-                className="inline-block px-4 py-2 rounded-full text-white text-lg font-bold"
-                style={{
-                  backgroundColor:
-                    level === 1
-                      ? "#FF9F1C"
-                      : level === 2
-                      ? "#41B3A3"
-                      : "#D58BDD",
-                }}
-              >
-                Cấp độ {level}
-              </div>
-            )}
-          </motion.header>
+      <header className="header">
+        <div className="header-content">
+          <Link href="/" className="logo">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+            </svg>
+            Toán Vui Tiểu Học
+          </Link>
 
-          <motion.div
-            className="w-full max-w-4xl"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            {children}
-          </motion.div>
+          {level && <div className="level-badge">Cấp độ {level}</div>}
         </div>
-      </motion.main>
+      </header>
 
-      <footer className="text-center py-4 text-gray-600 text-sm">
-        <p>&copy; {new Date().getFullYear()} Toán Vui Tiểu Học</p>
+      <main className="main-content">
+        {/* Title */}
+        {title && title !== "Toán Vui Tiểu Học" && (
+          <h1 className="page-title">{title}</h1>
+        )}
+
+        {/* Main content */}
+        <div className="content-container">{children}</div>
+
+        {/* Home button (conditionally rendered) */}
+        {showHomeButton && (
+          <div className="text-center">
+            <Link href="/" className="home-button">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Quay lại trang chủ
+            </Link>
+          </div>
+        )}
+      </main>
+
+      <footer className="footer">
+        <div className="footer-content">
+          &copy; {new Date().getFullYear()} Toán Vui Tiểu Học
+        </div>
       </footer>
-
-      {/* Thêm style cho gradient */}
-      <style jsx global>{`
-        .level-1-gradient {
-          background: linear-gradient(
-            135deg,
-            #fff7e0 0%,
-            #ffefba 50%,
-            #ffe3b0 100%
-          );
-        }
-        .level-2-gradient {
-          background: linear-gradient(
-            135deg,
-            #e0f7f5 0%,
-            #c1e8e3 50%,
-            #a2d9d1 100%
-          );
-        }
-        .level-3-gradient {
-          background: linear-gradient(
-            135deg,
-            #f8e0ff 0%,
-            #f0c6ff 50%,
-            #ebabff 100%
-          );
-        }
-      `}</style>
     </div>
   );
 };

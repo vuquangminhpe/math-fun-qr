@@ -4,8 +4,8 @@ import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import QRCode from "@/components/shared/QRCode";
 import { levelInfo } from "@/data/questionService";
-import { motion } from "framer-motion";
 import { LevelInfo } from "@/types";
+import "../components/styles/Home.css"; // Import CSS module for styling
 
 interface HomeProps {
   baseUrl: string;
@@ -13,125 +13,304 @@ interface HomeProps {
 }
 
 export default function Home({ baseUrl, levels }: HomeProps) {
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1 },
-  };
-
   return (
-    <Layout title="Toán Vui Tiểu Học - Học toán qua QR">
-      <div className="text-center mb-12">
-        <motion.h2
-          className="text-2xl md:text-3xl font-comic text-primary-dark mb-4"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          Chào mừng các bạn nhỏ đến với Toán Vui Tiểu Học!
-        </motion.h2>
+    <Layout title="Toán Vui Tiểu Học" showHomeButton={false}>
+      <section className="hero-section">
+        <h2 className="hero-title">Học toán thật vui!</h2>
+        <p className="hero-subtitle">
+          Chọn cấp độ phù hợp với khả năng của bạn và bắt đầu giải toán ngay
+          nào!
+        </p>
+      </section>
 
-        <motion.p
-          className="text-lg text-gray-700 max-w-2xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-        >
-          Hãy quét mã QR hoặc nhấn vào cấp độ bạn muốn để bắt đầu giải toán nhé!
-        </motion.p>
+      {/* QR Code cho trang chủ */}
+      <div className="home-qr-section">
+        <h3 className="qr-section-title">Mã QR Truy Cập</h3>
+        <div className="qr-codes-grid">
+          <div className="main-qr">
+            <QRCode
+              url={baseUrl}
+              title="Trang Chính"
+              size={150}
+              colorDark="#3b82f6"
+            />
+          </div>
+
+          <div className="levels-qr-grid">
+            {levels.map((level) => {
+              // Màu sắc dựa vào cấp độ
+              const colors = {
+                1: "#10b981", // Green
+                2: "#3b82f6", // Blue
+                3: "#8b5cf6", // Purple
+              };
+
+              return (
+                <div key={level.id} className={`level-${level.id}-qr`}>
+                  <QRCode
+                    url={`${baseUrl}/level${level.id}`}
+                    title={`Cấp độ ${level.id}`}
+                    size={80}
+                    colorDark={colors[level.id as keyof typeof colors]}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="levels-grid">
         {levels.map((level) => (
-          <motion.div
-            key={level.id}
-            className="flex flex-col items-center"
-            variants={itemVariants}
-          >
-            <QRCode
-              url={`${baseUrl}/level${level.id}`}
-              level={level.id}
-              title={level.title}
-            />
-
-            <motion.div
-              className="mt-6"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+          <div key={level.id} className="level-card">
+            <div className={`level-card-header level-${level.id}-header`}>
+              <h3 className="level-card-title">Cấp độ {level.id}</h3>
+              <p className="level-card-description">{level.description}</p>
               <Link
                 href={`/level${level.id}`}
-                className={`inline-block py-3 px-6 rounded-xl text-white font-bold shadow-lg transition-all duration-300 bg-${
-                  level.id === 1
-                    ? "primary"
-                    : level.id === 2
-                    ? "secondary"
-                    : "accent"
-                }`}
-                style={{
-                  backgroundColor:
-                    level.id === 1
-                      ? "#FF9F1C"
-                      : level.id === 2
-                      ? "#41B3A3"
-                      : "#D58BDD",
-                }}
+                className={`start-button level-${level.id}-button`}
               >
-                Vào Cấp độ {level.id}
+                Bắt đầu
               </Link>
-            </motion.div>
+            </div>
 
-            <motion.p
-              className="mt-4 text-gray-700 text-center max-w-xs"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 + level.id * 0.2 }}
-            >
-              {level.description}
-            </motion.p>
-          </motion.div>
+            <div className="level-card-body">
+              <div className="level-features-title">Đặc điểm:</div>
+              <ul className="level-features-list">
+                {level.id === 1 && (
+                  <>
+                    <li className="level-feature-item">
+                      <span className={`feature-icon level-${level.id}-icon`}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
+                      Phép tính cộng, trừ đơn giản
+                    </li>
+                    <li className="level-feature-item">
+                      <span className={`feature-icon level-${level.id}-icon`}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
+                      Phù hợp cho học sinh lớp 2
+                    </li>
+                  </>
+                )}
+                {level.id === 2 && (
+                  <>
+                    <li className="level-feature-item">
+                      <span className={`feature-icon level-${level.id}-icon`}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
+                      Phép tính nhân, chia
+                    </li>
+                    <li className="level-feature-item">
+                      <span className={`feature-icon level-${level.id}-icon`}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
+                      Phù hợp cho học sinh lớp 2
+                    </li>
+                  </>
+                )}
+                {level.id === 3 && (
+                  <>
+                    <li className="level-feature-item">
+                      <span className={`feature-icon level-${level.id}-icon`}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
+                      Bài toán nhiều bước giải
+                    </li>
+                    <li className="level-feature-item">
+                      <span className={`feature-icon level-${level.id}-icon`}>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </span>
+                      Phù hợp cho học sinh lớp 2
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
-      <motion.div
-        className="bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg max-w-2xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5 }}
-      >
-        <h3 className="text-xl font-comic text-primary-dark mb-4">
-          Hướng dẫn sử dụng:
-        </h3>
-        <ul className="list-disc pl-6 space-y-2 text-gray-700">
-          <li>Chọn cấp độ phù hợp với khả năng của bạn</li>
-          <li>Đọc kỹ đề bài và suy nghĩ trước khi chọn đáp án</li>
-          <li>Mỗi câu trả lời đúng sẽ có hiệu ứng đặc biệt!</li>
-          <li>Hoàn thành bài kiểm tra để xem kết quả của bạn</li>
-          <li>Bạn có thể quét mã QR để làm bài trên điện thoại</li>
-        </ul>
-      </motion.div>
+      <section className="how-to-use-section">
+        <h3 className="how-to-use-title">Hướng dẫn sử dụng:</h3>
+        <div className="steps-grid">
+          <div className="step-item">
+            <div className="step-icon-container step-1-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                width="20"
+                height="20"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                />
+              </svg>
+            </div>
+            <div className="step-content">
+              <h4 className="step-title">Chọn cấp độ</h4>
+              <p className="step-description">
+                Bắt đầu với cấp độ phù hợp với khả năng của bạn
+              </p>
+            </div>
+          </div>
+
+          <div className="step-item">
+            <div className="step-icon-container step-2-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                width="20"
+                height="20"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                />
+              </svg>
+            </div>
+            <div className="step-content">
+              <h4 className="step-title">Trả lời câu hỏi</h4>
+              <p className="step-description">
+                Đọc kỹ đề bài và chọn đáp án đúng
+              </p>
+            </div>
+          </div>
+
+          <div className="step-item">
+            <div className="step-icon-container step-3-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                width="20"
+                height="20"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+                />
+              </svg>
+            </div>
+            <div className="step-content">
+              <h4 className="step-title">Xem kết quả</h4>
+              <p className="step-description">
+                Kiểm tra điểm số của bạn sau khi hoàn thành
+              </p>
+            </div>
+          </div>
+
+          <div className="step-item">
+            <div className="step-icon-container step-4-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                width="20"
+                height="20"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+            </div>
+            <div className="step-content">
+              <h4 className="step-title">Làm lại</h4>
+              <p className="step-description">
+                Luyện tập nhiều lần để nâng cao kỹ năng
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  // Trong môi trường phát triển, sử dụng localhost
-  // Trong môi trường sản xuất, đường dẫn sẽ được cập nhật khi triển khai
   const baseUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:3000"

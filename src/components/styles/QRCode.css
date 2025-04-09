@@ -1,0 +1,63 @@
+.qr-code-container {
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.qr-code-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+.qr-code-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.qr-code-image {
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+}
+
+.qr-code-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* QR Code colors for different levels */
+.level-1-qr .qr-code-image {
+  border-color: #10b981;
+}
+
+.level-2-qr .qr-code-image {
+  border-color: #3b82f6;
+}
+
+.level-3-qr .qr-code-image {
+  border-color: #8b5cf6;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.qr-code-container {
+  animation: fadeIn 0.5s ease-in-out;
+}

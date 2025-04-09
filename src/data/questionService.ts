@@ -61,20 +61,20 @@ export const levelInfo = [
     title: "Cấp độ 1: Toán Cơ Bản",
     description: "Các bài toán đơn giản về phép cộng, trừ, nhân, chia",
     color: "primary",
-    backgroundImage: "/images/backgrounds/level1-bg.jpg",
+    backgroundImage: "/images/backgrounds/bg1.png",
   },
   {
     id: 2,
     title: "Cấp độ 2: Toán Trung Bình",
     description: "Các bài toán có lời văn phức tạp hơn về tốc độ, thời gian",
     color: "secondary",
-    backgroundImage: "/images/backgrounds/level2-bg.jpg",
+    backgroundImage: "/images/backgrounds/bg3.jpg",
   },
   {
     id: 3,
     title: "Cấp độ 3: Toán Nâng Cao",
     description: "Các bài toán phức tạp hơn đòi hỏi nhiều bước giải",
     color: "accent",
-    backgroundImage: "/images/backgrounds/level3-bg.jpg",
+    backgroundImage: "/images/backgrounds/bg5.jpg",
   },
 ];

@@ -1,58 +1,75 @@
 import React from "react";
+import { GetStaticProps } from "next";
 import Layout from "@/components/layout/Layout";
 import QuizContainer from "@/components/quiz/QuizContainer";
 import { levelInfo } from "@/data/questionService";
-import { GetStaticProps } from "next";
 import { LevelInfo } from "@/types";
-import Link from "next/link";
-import { motion } from "framer-motion";
 
 interface Level3Props {
   levelData: LevelInfo;
+  baseUrl: string;
 }
 
 export default function Level3({ levelData }: Level3Props) {
   return (
-    <Layout
-      title={levelData.title}
-      level={levelData.id}
-      backgroundImage={levelData.backgroundImage}
-    >
-      <div className="mb-8">
-        <motion.div
-          className="bg-white bg-opacity-90 rounded-xl p-4 mb-6 shadow-lg"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <p className="text-center text-gray-700">
-            Đây là cấp độ cao nhất! Các bài toán sẽ đòi hỏi nhiều bước tính toán
-            và suy luận. Cố gắng nhé!
-          </p>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          <QuizContainer level={levelData.id} questionsCount={5} />
-        </motion.div>
+    <Layout title={levelData.title} level={levelData.id}>
+      <div
+        className="level-intro"
+        style={{
+          backgroundColor: "#f5f3ff",
+          padding: "1rem",
+          borderRadius: "0.5rem",
+          marginBottom: "1.5rem",
+          borderLeft: "4px solid #8b5cf6",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "flex-start" }}>
+          <div
+            style={{
+              backgroundColor: "#ede9fe",
+              color: "#5b21b6",
+              borderRadius: "9999px",
+              padding: "0.5rem",
+              marginRight: "0.75rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3
+              style={{
+                fontWeight: 500,
+                marginBottom: "0.25rem",
+                color: "#1f2937",
+              }}
+            >
+              Hướng dẫn:
+            </h3>
+            <p style={{ color: "#4b5563" }}>
+              Đây là cấp độ cao nhất! Các bài toán sẽ đòi hỏi nhiều bước tính
+              toán và suy luận. Cố gắng nhé!
+            </p>
+          </div>
+        </div>
       </div>
 
-      <motion.div
-        className="text-center mt-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-      >
-        <Link
-          href="/"
-          className="inline-block bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg transition-all duration-300"
-        >
-          Quay lại trang chủ
-        </Link>
-      </motion.div>
+      <QuizContainer level={levelData.id} questionsCount={10} />
     </Layout>
   );
 }
@@ -66,9 +83,15 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   }
 
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://math-fun-qr.vercel.app";
+
   return {
     props: {
       levelData,
+      baseUrl,
     },
   };
 };

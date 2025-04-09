@@ -1,124 +1,72 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
+import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 
-interface ConfettiPiece {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  rotate: number;
-  rotateSpeed: number;
-  horizontalSpeed: number;
-  fallSpeed: number;
-  color: string;
-  shape: "circle" | "square" | "triangle";
+interface ConfettiProps {
+  duration?: number;
 }
 
-const Confetti: React.FC = () => {
-  const [confettiPieces, setConfettiPieces] = useState<ConfettiPiece[]>([]);
+const Confetti: React.FC<ConfettiProps> = ({ duration = 5000 }) => {
+  const [animationData, setAnimationData] = useState<any>(null);
 
+  // Tải animation JSON khi component được render
   useEffect(() => {
-    const colors = [
-      "#FF9F1C", // primary
-      "#41B3A3", // secondary
-      "#D58BDD", // accent
-      "#FFD166", // yellow
-      "#F76E11", // orange
-    ];
+    fetch("/animations/confetti.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setAnimationData(data);
 
-    const shapes: ("circle" | "square" | "triangle")[] = [
-      "circle",
-      "square",
-      "triangle",
-    ];
+        // Tự động xóa sau khoảng thời gian duration
+        const timer = setTimeout(() => {
+          setAnimationData(null);
+        }, duration);
 
-    // Tạo ngẫu nhiên 100 mảnh confetti
-    const newConfetti = Array.from({ length: 100 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100, // vị trí ngang ban đầu (%)
-      y: -10 - Math.random() * 10, // vị trí dọc ban đầu (%)
-      size: Math.random() * 10 + 5, // kích thước (px)
-      rotate: Math.random() * 360, // góc xoay ban đầu (độ)
-      rotateSpeed: (Math.random() - 0.5) * 10, // tốc độ xoay (độ/s)
-      horizontalSpeed: (Math.random() - 0.5) * 10, // tốc độ ngang
-      fallSpeed: Math.random() * 3 + 1, // tốc độ rơi
-      color: colors[Math.floor(Math.random() * colors.length)],
-      shape: shapes[Math.floor(Math.random() * shapes.length)],
-    }));
+        return () => clearTimeout(timer);
+      })
+      .catch((error) => console.error("Error loading animation:", error));
+  }, [duration]);
 
-    setConfettiPieces(newConfetti);
-
-    // Tự động xóa confetti sau 5 giây
-    const timer = setTimeout(() => {
-      setConfettiPieces([]);
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Render shape based on type
-  const renderShape = (piece: ConfettiPiece) => {
-    switch (piece.shape) {
-      case "circle":
-        return (
-          <div
-            className="rounded-full w-full h-full"
-            style={{ backgroundColor: piece.color }}
-          />
-        );
-      case "square":
-        return (
-          <div
-            className="w-full h-full"
-            style={{ backgroundColor: piece.color }}
-          />
-        );
-      case "triangle":
-        return (
-          <div
-            className="w-full h-full"
-            style={{
-              clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
-              backgroundColor: piece.color,
-            }}
-          />
-        );
-    }
-  };
+  // Nếu không có dữ liệu animation, không hiển thị gì
+  if (!animationData) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-10 overflow-hidden">
-      {confettiPieces.map((piece) => (
-        <motion.div
-          key={piece.id}
-          className="absolute"
-          style={{
-            left: `${piece.x}%`,
-            top: `${piece.y}%`,
-            width: piece.size,
-            height: piece.size,
-          }}
-          initial={{
-            y: piece.y,
-            x: piece.x,
-            rotate: piece.rotate,
-            opacity: 1,
-          }}
-          animate={{
-            y: [piece.y, 110],
-            x: [piece.x, piece.x + piece.horizontalSpeed * 10],
-            rotate: [piece.rotate, piece.rotate + piece.rotateSpeed * 10],
-            opacity: [1, 1, 0],
-          }}
-          transition={{
-            duration: 5 / piece.fallSpeed,
-            ease: "linear",
-          }}
-        >
-          {renderShape(piece)}
-        </motion.div>
-      ))}
-    </div>
+    <motion.div
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Hiệu ứng confetti tràn khắp màn hình */}
+      <div className="absolute top-0 left-0 w-full">
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoplay={true}
+          style={{ width: "100%", height: "100vh" }}
+        />
+      </div>
+
+      {/* Thêm hiệu ứng confetti từ hai bên */}
+      <div className="absolute top-0 left-0 w-1/2 h-full">
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoplay={true}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+
+      <div className="absolute top-0 right-0 w-1/2 h-full">
+        <Lottie
+          animationData={animationData}
+          loop={true}
+          autoplay={true}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
+    </motion.div>
   );
 };
 
