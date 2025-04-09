@@ -4,12 +4,12 @@ import { Question } from "@/types";
 const level3Questions: Question[] = [
   {
     id: "l3q1",
-    text: "Một cửa hàng bán 25 chiếc áo, thu được 2.000.000 đồng. Hỏi nếu bán 40 chiếc áo như vậy thì cửa hàng thu được bao nhiêu tiền?",
+    text: "Một cửa hàng bán 25 chiếc áo, thu được 500 đồng. Hỏi nếu bán 40 chiếc áo như vậy thì cửa hàng thu được bao nhiêu tiền?",
     answers: [
-      { id: "l3q1a1", text: "3.000.000 đồng", isCorrect: false },
-      { id: "l3q1a2", text: "3.200.000 đồng", isCorrect: true },
-      { id: "l3q1a3", text: "3.500.000 đồng", isCorrect: false },
-      { id: "l3q1a4", text: "3.800.000 đồng", isCorrect: false },
+      { id: "l3q1a1", text: "700 đồng", isCorrect: false },
+      { id: "l3q1a2", text: "800 đồng", isCorrect: true },
+      { id: "l3q1a3", text: "850 đồng", isCorrect: false },
+      { id: "l3q1a4", text: "900 đồng", isCorrect: false },
     ],
     difficulty: "hard",
   },
@@ -59,12 +59,12 @@ const level3Questions: Question[] = [
   },
   {
     id: "l3q6",
-    text: "Một cửa hàng buổi sáng bán được 36 kg gạo, buổi chiều bán được 42 kg gạo. Giá gạo buổi sáng là 15.000 đồng/kg, buổi chiều tăng lên 18.000 đồng/kg. Hỏi cả ngày cửa hàng thu được bao nhiêu tiền?",
+    text: "Một cửa hàng buổi sáng bán được 36 kg gạo, buổi chiều bán được 42 kg gạo. Giá gạo buổi sáng là 15 đồng/kg, buổi chiều tăng lên 18 đồng/kg. Hỏi cả ngày cửa hàng thu được bao nhiêu tiền?",
     answers: [
-      { id: "l3q6a1", text: "1.296.000 đồng", isCorrect: true },
-      { id: "l3q6a2", text: "1.260.000 đồng", isCorrect: false },
-      { id: "l3q6a3", text: "1.300.000 đồng", isCorrect: false },
-      { id: "l3q6a4", text: "1.350.000 đồng", isCorrect: false },
+      { id: "l3q6a1", text: "1.296 đồng", isCorrect: true },
+      { id: "l3q6a2", text: "1.260 đồng", isCorrect: false },
+      { id: "l3q6a3", text: "1.300 đồng", isCorrect: false },
+      { id: "l3q6a4", text: "1.350 đồng", isCorrect: false },
     ],
     difficulty: "hard",
   },
@@ -109,6 +109,62 @@ const level3Questions: Question[] = [
       { id: "l3q10a2", text: "1,6 giờ", isCorrect: false },
       { id: "l3q10a3", text: "1,7 giờ", isCorrect: true },
       { id: "l3q10a4", text: "1,8 giờ", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  // Thêm câu hỏi mới
+  {
+    id: "l3q11",
+    text: "Một hỗn hợp gồm 3 phần dầu và 5 phần nước. Nếu có 240ml hỗn hợp, hỏi có bao nhiêu ml dầu trong hỗn hợp?",
+    answers: [
+      { id: "l3q11a1", text: "90ml dầu", isCorrect: true },
+      { id: "l3q11a2", text: "80ml dầu", isCorrect: false },
+      { id: "l3q11a3", text: "100ml dầu", isCorrect: false },
+      { id: "l3q11a4", text: "110ml dầu", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q12",
+    text: "Một người đi xe đạp với vận tốc 15km/h trong 2 giờ, sau đó đi bộ với vận tốc 5km/h trong 1 giờ. Hỏi quãng đường người đó đã đi là bao nhiêu km?",
+    answers: [
+      { id: "l3q12a1", text: "35km", isCorrect: true },
+      { id: "l3q12a2", text: "30km", isCorrect: false },
+      { id: "l3q12a3", text: "40km", isCorrect: false },
+      { id: "l3q12a4", text: "45km", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q13",
+    text: "Một hình tam giác có diện tích 84cm². Nếu chiều cao của tam giác là 12cm, hỏi độ dài của đáy tam giác là bao nhiêu cm?",
+    answers: [
+      { id: "l3q13a1", text: "14cm", isCorrect: true },
+      { id: "l3q13a2", text: "12cm", isCorrect: false },
+      { id: "l3q13a3", text: "16cm", isCorrect: false },
+      { id: "l3q13a4", text: "18cm", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q14",
+    text: "Một cửa hàng nhập về 120 áo với giá 60 đồng mỗi áo. Nếu bán được 75% số áo với giá 95 đồng mỗi áo, hỏi cửa hàng lãi bao nhiêu đồng?",
+    answers: [
+      { id: "l3q14a1", text: "2.550 đồng", isCorrect: false },
+      { id: "l3q14a2", text: "2.650 đồng", isCorrect: false },
+      { id: "l3q14a3", text: "2.700 đồng", isCorrect: true },
+      { id: "l3q14a4", text: "2.800 đồng", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q15",
+    text: "Tuổi của mẹ gấp 4 lần tuổi của con. Sau 5 năm, tuổi của mẹ sẽ gấp 3 lần tuổi của con. Hỏi hiện nay con bao nhiêu tuổi?",
+    answers: [
+      { id: "l3q15a1", text: "5 tuổi", isCorrect: true },
+      { id: "l3q15a2", text: "6 tuổi", isCorrect: false },
+      { id: "l3q15a3", text: "7 tuổi", isCorrect: false },
+      { id: "l3q15a4", text: "8 tuổi", isCorrect: false },
     ],
     difficulty: "hard",
   },

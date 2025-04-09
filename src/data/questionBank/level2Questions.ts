@@ -103,12 +103,68 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q10",
-    text: "Một cửa hàng nhập về 8 thùng nước ngọt, mỗi thùng có 24 chai. Nếu bán mỗi chai với giá 15.000 đồng thì cửa hàng thu được bao nhiêu tiền?",
+    text: "Một cửa hàng nhập về 8 thùng nước ngọt, mỗi thùng có 12 chai. Nếu bán mỗi chai với giá 8 đồng thì cửa hàng thu được bao nhiêu tiền?",
     answers: [
-      { id: "l2q10a1", text: "2.880.000 đồng", isCorrect: true },
-      { id: "l2q10a2", text: "2.800.000 đồng", isCorrect: false },
-      { id: "l2q10a3", text: "2.850.000 đồng", isCorrect: false },
-      { id: "l2q10a4", text: "2.900.000 đồng", isCorrect: false },
+      { id: "l2q10a1", text: "768 đồng", isCorrect: true },
+      { id: "l2q10a2", text: "758 đồng", isCorrect: false },
+      { id: "l2q10a3", text: "778 đồng", isCorrect: false },
+      { id: "l2q10a4", text: "788 đồng", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  // Thêm câu hỏi mới
+  {
+    id: "l2q11",
+    text: "Một thư viện có 478 quyển sách tiếng Việt và 362 quyển sách tiếng Anh. Đã có 295 quyển sách được mượn. Hỏi thư viện còn lại bao nhiêu quyển sách?",
+    answers: [
+      { id: "l2q11a1", text: "545 quyển sách", isCorrect: true },
+      { id: "l2q11a2", text: "535 quyển sách", isCorrect: false },
+      { id: "l2q11a3", text: "555 quyển sách", isCorrect: false },
+      { id: "l2q11a4", text: "565 quyển sách", isCorrect: false },
+    ],
+    difficulty: "medium",
+  },
+  {
+    id: "l2q12",
+    text: "Một lớp học có 28 học sinh. Mỗi tuần học sinh phải làm 5 bài tập, mỗi bài tập có 6 câu hỏi. Hỏi mỗi tuần cả lớp phải làm tổng cộng bao nhiêu câu hỏi?",
+    answers: [
+      { id: "l2q12a1", text: "840 câu hỏi", isCorrect: true },
+      { id: "l2q12a2", text: "830 câu hỏi", isCorrect: false },
+      { id: "l2q12a3", text: "850 câu hỏi", isCorrect: false },
+      { id: "l2q12a4", text: "860 câu hỏi", isCorrect: false },
+    ],
+    difficulty: "medium",
+  },
+  {
+    id: "l2q13",
+    text: "Một cửa hàng bánh có 864 cái bánh. Nếu đóng gói mỗi hộp 12 cái bánh, hỏi cửa hàng đóng gói được bao nhiêu hộp bánh?",
+    answers: [
+      { id: "l2q13a1", text: "72 hộp bánh", isCorrect: true },
+      { id: "l2q13a2", text: "70 hộp bánh", isCorrect: false },
+      { id: "l2q13a3", text: "74 hộp bánh", isCorrect: false },
+      { id: "l2q13a4", text: "76 hộp bánh", isCorrect: false },
+    ],
+    difficulty: "medium",
+  },
+  {
+    id: "l2q14",
+    text: "Một cửa hàng bán 3 loại trái cây: 125kg táo, 95kg cam và 76kg lê. Hỏi cửa hàng có tổng cộng bao nhiêu kg trái cây?",
+    answers: [
+      { id: "l2q14a1", text: "296kg", isCorrect: true },
+      { id: "l2q14a2", text: "286kg", isCorrect: false },
+      { id: "l2q14a3", text: "306kg", isCorrect: false },
+      { id: "l2q14a4", text: "316kg", isCorrect: false },
+    ],
+    difficulty: "medium",
+  },
+  {
+    id: "l2q15",
+    text: "Nam đi học mất 25 phút, đi học về mất 30 phút. Trong một tuần học 5 ngày, hỏi Nam mất bao nhiêu phút để đi học và về nhà trong một tuần?",
+    answers: [
+      { id: "l2q15a1", text: "275 phút", isCorrect: true },
+      { id: "l2q15a2", text: "265 phút", isCorrect: false },
+      { id: "l2q15a3", text: "285 phút", isCorrect: false },
+      { id: "l2q15a4", text: "295 phút", isCorrect: false },
     ],
     difficulty: "hard",
   },
