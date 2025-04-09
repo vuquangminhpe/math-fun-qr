@@ -1,0 +1,136 @@
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+:root {
+  --primary-color: #ff9f1c;
+  --primary-light: #ffd166;
+  --primary-dark: #f76e11;
+  --secondary-color: #41b3a3;
+  --secondary-light: #90e39a;
+  --secondary-dark: #2e8b57;
+  --accent-color: #d58bdd;
+  --accent-light: #f5c6ff;
+  --accent-dark: #9656a1;
+  --background-color: #fcefef;
+  --background-light: #f9f7f3;
+  --background-dark: #fbe4d8;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Varela Round", -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
+  background-color: var(--background-color);
+}
+
+.font-comic {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+.font-rounded {
+  font-family: "Varela Round", sans-serif;
+}
+
+/* Hiệu ứng animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Loader */
+.loader {
+  border-top-color: var(--primary-color);
+  -webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hiệu ứng nút */
+button,
+a {
+  transition: all 0.3s ease;
+}
+
+/* Customize scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Custom classes for colors */
+.bg-primary {
+  background-color: var(--primary-color);
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color);
+}
+
+.bg-accent {
+  background-color: var(--accent-color);
+}
+
+.text-primary-dark {
+  color: var(--primary-dark);
+}
+
+.border-primary {
+  border-color: var(--primary-color);
+}
+
+/* Override some Tailwind classes to make them more child-friendly */
+.rounded-3xl {
+  border-radius: 2rem;
+}
+
+.shadow-card {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-bubble {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
