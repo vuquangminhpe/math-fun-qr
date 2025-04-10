@@ -48,7 +48,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q5",
-    text: "Một cửa hàng có 5 thùng táo, mỗi thùng có 28kg táo. Đã bán được 64kg táo. Hỏi cửa hàng còn bao nhiêu kg táo?",
+    text: "Một cửa hàng có 5 thùng táo. Thùng 1 có 28kg táo, thùng 2 có 28kg táo, thùng 3 có 28kg táo, thùng 4 có 28kg táo, thùng 5 có 28kg táo. Đã bán được 64kg táo. Hỏi cửa hàng còn bao nhiêu kg táo?",
     answers: [
       { id: "l2q5a1", text: "76kg táo", isCorrect: true },
       { id: "l2q5a2", text: "74kg táo", isCorrect: false },
@@ -59,7 +59,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q6",
-    text: "Một đoàn xe có 18 xe máy và 12 ô tô. Hỏi đoàn xe có tất cả bao nhiêu bánh xe? (Biết rằng xe máy có 2 bánh, ô tô có 4 bánh)",
+    text: "Một đoàn xe có 18 xe máy và 12 ô tô. Mỗi xe máy có bánh trước và bánh sau (tổng 2 bánh). Mỗi ô tô có 2 bánh trước và 2 bánh sau (tổng 4 bánh). Hỏi đoàn xe có tất cả bao nhiêu bánh xe?",
     answers: [
       { id: "l2q6a1", text: "84 bánh xe", isCorrect: true },
       { id: "l2q6a2", text: "90 bánh xe", isCorrect: false },
@@ -70,7 +70,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q7",
-    text: "Một cửa hàng bán được 145 quyển sách trong 5 ngày. Trung bình mỗi ngày bán được bao nhiêu quyển sách?",
+    text: "Một cửa hàng bán được 145 quyển sách trong 5 ngày. Nếu mỗi ngày bán được số sách bằng nhau, thì ngày thứ nhất bán 29 quyển, ngày thứ hai bán 29 quyển, và cứ như vậy. Hỏi mỗi ngày bán được bao nhiêu quyển sách?",
     answers: [
       { id: "l2q7a1", text: "28 quyển sách", isCorrect: false },
       { id: "l2q7a2", text: "29 quyển sách", isCorrect: true },
@@ -81,7 +81,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q8",
-    text: "Lan đi bộ từ nhà đến trường với vận tốc 4km/h trong thời gian 30 phút. Tính quãng đường từ nhà Lan đến trường?",
+    text: "Lan đi bộ từ nhà đến trường trong thời gian 30 phút (0.5 giờ). Mỗi giờ Lan đi được 4km. Hỏi quãng đường từ nhà Lan đến trường là bao nhiêu?",
     answers: [
       { id: "l2q8a1", text: "1km", isCorrect: false },
       { id: "l2q8a2", text: "2km", isCorrect: true },
@@ -92,7 +92,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q9",
-    text: "Một cửa hàng có 3 loại kẹo: loại 1 có 125 cái, loại 2 có 215 cái, loại 3 có 184 cái. Người ta chia số kẹo đều vào 16 hộp. Hỏi mỗi hộp có bao nhiêu cái kẹo?",
+    text: "Một cửa hàng có 3 loại kẹo: loại 1 có 125 cái, loại 2 có 215 cái, loại 3 có 184 cái. Người ta xếp số kẹo vào 16 hộp sao cho mỗi hộp có số kẹo bằng nhau. Nếu mỗi hộp có 33 cái kẹo thì vừa đủ số kẹo. Hỏi mỗi hộp có bao nhiêu cái kẹo?",
     answers: [
       { id: "l2q9a1", text: "32 cái kẹo", isCorrect: false },
       { id: "l2q9a2", text: "33 cái kẹo", isCorrect: true },
@@ -103,7 +103,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q10",
-    text: "Một cửa hàng nhập về 8 thùng nước ngọt, mỗi thùng có 12 chai. Nếu bán mỗi chai với giá 8 đồng thì cửa hàng thu được bao nhiêu tiền?",
+    text: "Một cửa hàng nhập về 8 thùng nước ngọt. Thùng 1 có 12 chai, thùng 2 có 12 chai, thùng 3 có 12 chai, thùng 4 có 12 chai, thùng 5 có 12 chai, thùng 6 có 12 chai, thùng 7 có 12 chai, thùng 8 có 12 chai. Mỗi chai bán với giá 8 đồng. Hỏi nếu bán hết tất cả các chai nước ngọt, cửa hàng thu được bao nhiêu tiền?",
     answers: [
       { id: "l2q10a1", text: "768 đồng", isCorrect: true },
       { id: "l2q10a2", text: "758 đồng", isCorrect: false },
@@ -126,7 +126,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q12",
-    text: "Một lớp học có 28 học sinh. Mỗi tuần học sinh phải làm 5 bài tập, mỗi bài tập có 6 câu hỏi. Hỏi mỗi tuần cả lớp phải làm tổng cộng bao nhiêu câu hỏi?",
+    text: "Một lớp học có 28 học sinh. Mỗi tuần, mỗi học sinh phải làm 5 bài tập. Mỗi bài tập có 6 câu hỏi. Hỏi mỗi tuần cả lớp phải làm tổng cộng bao nhiêu câu hỏi?",
     answers: [
       { id: "l2q12a1", text: "840 câu hỏi", isCorrect: true },
       { id: "l2q12a2", text: "830 câu hỏi", isCorrect: false },
@@ -137,7 +137,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q13",
-    text: "Một cửa hàng bánh có 864 cái bánh. Nếu đóng gói mỗi hộp 12 cái bánh, hỏi cửa hàng đóng gói được bao nhiêu hộp bánh?",
+    text: "Một cửa hàng bánh có 864 cái bánh. Cửa hàng đóng gói bánh vào các hộp, mỗi hộp đựng 12 cái bánh. Nếu đóng đủ 72 hộp thì vừa hết số bánh. Hỏi cửa hàng đóng gói được bao nhiêu hộp bánh?",
     answers: [
       { id: "l2q13a1", text: "72 hộp bánh", isCorrect: true },
       { id: "l2q13a2", text: "70 hộp bánh", isCorrect: false },
@@ -159,7 +159,7 @@ const level2Questions: Question[] = [
   },
   {
     id: "l2q15",
-    text: "Nam đi học mất 25 phút, đi học về mất 30 phút. Trong một tuần học 5 ngày, hỏi Nam mất bao nhiêu phút để đi học và về nhà trong một tuần?",
+    text: "Nam đi học mất 25 phút, đi học về mất 30 phút. Một tuần Nam đi học 5 ngày: thứ Hai, thứ Ba, thứ Tư, thứ Năm và thứ Sáu. Hỏi Nam mất bao nhiêu phút để đi học và về nhà trong một tuần?",
     answers: [
       { id: "l2q15a1", text: "275 phút", isCorrect: true },
       { id: "l2q15a2", text: "265 phút", isCorrect: false },

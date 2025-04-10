@@ -26,7 +26,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q3",
-    text: "Bố mua 24 quả táo. Bố chia đều cho 4 người trong gia đình. Hỏi mỗi người được bao nhiêu quả táo?",
+    text: "Bố mua 24 quả táo. Bố đưa táo cho 4 người trong gia đình, mỗi người nhận số táo bằng nhau. Nếu mỗi người nhận 6 quả táo thì vừa đủ hết số táo. Hỏi mỗi người được bao nhiêu quả táo?",
     answers: [
       { id: "l1q3a1", text: "5 quả táo", isCorrect: false },
       { id: "l1q3a2", text: "6 quả táo", isCorrect: true },
@@ -59,7 +59,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q6",
-    text: "Minh có 50 viên bi. Minh chia bi thành 5 phần bằng nhau. Hỏi mỗi phần có bao nhiêu viên bi?",
+    text: "Minh có 50 viên bi. Minh xếp bi thành 5 hàng, mỗi hàng có số bi bằng nhau. Hỏi mỗi hàng có bao nhiêu viên bi?",
     answers: [
       { id: "l1q6a1", text: "5 viên bi", isCorrect: false },
       { id: "l1q6a2", text: "10 viên bi", isCorrect: true },
@@ -70,7 +70,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q7",
-    text: "Trong vườn có 3 bụi hồng. Mỗi bụi hồng có 7 bông hoa. Hỏi tổng cộng có bao nhiêu bông hoa hồng?",
+    text: "Trong vườn có 3 bụi hồng. Bụi thứ nhất có 7 bông hoa, bụi thứ hai có 7 bông hoa, bụi thứ ba có 7 bông hoa. Hỏi tổng cộng có bao nhiêu bông hoa hồng?",
     answers: [
       { id: "l1q7a1", text: "18 bông hoa", isCorrect: false },
       { id: "l1q7a2", text: "21 bông hoa", isCorrect: true },
@@ -81,7 +81,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q8",
-    text: "Một tuần có 7 ngày. Hỏi 9 tuần có bao nhiêu ngày?",
+    text: "Một tuần có 7 ngày. Tuần 1 có 7 ngày, tuần 2 có 7 ngày, cứ như vậy đến tuần 9. Hỏi 9 tuần có bao nhiêu ngày?",
     answers: [
       { id: "l1q8a1", text: "56 ngày", isCorrect: false },
       { id: "l1q8a2", text: "63 ngày", isCorrect: true },
@@ -92,7 +92,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q9",
-    text: "Má mua 2 kg táo, mỗi kg táo có giá 15 đồng. Hỏi má phải trả bao nhiêu tiền?",
+    text: "Má mua táo. Một kg táo có giá 15 đồng. Má mua 1 kg đầu tiên trả 15 đồng, và 1 kg thứ hai trả 15 đồng nữa. Hỏi má phải trả bao nhiêu tiền tổng cộng?",
     answers: [
       { id: "l1q9a1", text: "25 đồng", isCorrect: false },
       { id: "l1q9a2", text: "30 đồng", isCorrect: true },
@@ -103,7 +103,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q10",
-    text: "Hoa có 45 cái kẹo. Hoa chia kẹo cho 5 bạn, mỗi bạn được số kẹo bằng nhau. Hỏi mỗi bạn được bao nhiêu cái kẹo?",
+    text: "Hoa có 45 cái kẹo. Hoa chia kẹo cho 5 bạn, mỗi bạn được số kẹo bằng nhau. Nếu cho bạn thứ nhất 9 cái, bạn thứ hai 9 cái, và các bạn còn lại cũng mỗi bạn 9 cái thì vừa hết. Hỏi mỗi bạn được bao nhiêu cái kẹo?",
     answers: [
       { id: "l1q10a1", text: "8 cái kẹo", isCorrect: false },
       { id: "l1q10a2", text: "9 cái kẹo", isCorrect: true },
@@ -137,7 +137,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q13",
-    text: "Một lớp học có 32 học sinh. Mỗi học sinh cần 3 quyển vở. Hỏi cần mua tổng cộng bao nhiêu quyển vở?",
+    text: "Một lớp học có 32 học sinh. Mỗi học sinh cần 3 quyển vở: 1 quyển toán, 1 quyển văn và 1 quyển tiếng Anh. Hỏi cần mua tổng cộng bao nhiêu quyển vở cho cả lớp?",
     answers: [
       { id: "l1q13a1", text: "86 quyển vở", isCorrect: false },
       { id: "l1q13a2", text: "96 quyển vở", isCorrect: true },
@@ -148,7 +148,7 @@ const level1Questions: Question[] = [
   },
   {
     id: "l1q14",
-    text: "Một hộp có 96 cái bút. Nếu chia đều cho 8 học sinh, hỏi mỗi học sinh nhận được bao nhiêu cái bút?",
+    text: "Một hộp có 96 cái bút. Nếu các học sinh xếp hàng và mỗi học sinh lấy 12 cái bút, thì có 8 học sinh được nhận bút. Hỏi mỗi học sinh nhận được bao nhiêu cái bút?",
     answers: [
       { id: "l1q14a1", text: "10 cái bút", isCorrect: false },
       { id: "l1q14a2", text: "12 cái bút", isCorrect: true },
