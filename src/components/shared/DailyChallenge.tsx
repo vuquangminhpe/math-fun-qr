@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { getRandomQuestions } from "@/data/questionService";
 import Question from "../quiz/Question";
 import "../styles/DailyChallenge.css";
-import { playSound } from "@/utils/soundUtils";
 import Confetti from "../animations/Confetti";
 import Stars from "../animations/Stars";
 
 const DailyChallenge: React.FC = () => {
-  const router = useRouter();
   const [dailyQuestion, setDailyQuestion] = useState<any>(null);
   const [answered, setAnswered] = useState<boolean>(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
@@ -101,7 +97,6 @@ const DailyChallenge: React.FC = () => {
       localStorage.setItem("dailyChallengeStreak", newStreak.toString());
 
       // Play sound and show animation for correct answer
-      playSound("correct.mp3" as any);
       setShowAnimation(true);
       setTimeout(() => {
         setShowAnimation(false);
