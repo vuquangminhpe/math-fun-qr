@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
+import dynamic from "next/dynamic";
 import Layout from "@/components/layout/Layout";
-import DailyChallenge from "@/components/shared/DailyChallenge";
+
+// Import DailyChallenge component dynamically with SSR disabled
+const DailyChallenge = dynamic(
+  () => import("@/components/shared/DailyChallenge"),
+  { ssr: false } // This prevents the component from being rendered on the server
+);
 
 export default function DailyChallengePage() {
   return (
