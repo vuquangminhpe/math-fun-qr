@@ -168,6 +168,61 @@ const level3Questions: Question[] = [
     ],
     difficulty: "hard",
   },
+  {
+    id: "l3q16",
+    text: "Một cửa hàng bán bánh có 360 cái bánh. Họ bán được 75% số bánh trong ngày đầu tiên và 40% số bánh còn lại trong ngày thứ hai. Hỏi sau hai ngày, cửa hàng còn lại bao nhiêu cái bánh?",
+    answers: [
+      { id: "l3q16a1", text: "54 cái bánh", isCorrect: true },
+      { id: "l3q16a2", text: "60 cái bánh", isCorrect: false },
+      { id: "l3q16a3", text: "72 cái bánh", isCorrect: false },
+      { id: "l3q16a4", text: "90 cái bánh", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q17",
+    text: "Hai xe ô tô khởi hành cùng lúc từ hai địa điểm A và B cách nhau 240km và chạy hướng về nhau. Xe thứ nhất chạy với vận tốc 65km/h và xe thứ hai chạy với vận tốc 55km/h. Hỏi sau bao lâu thì hai xe gặp nhau?",
+    answers: [
+      { id: "l3q17a1", text: "1,8 giờ", isCorrect: false },
+      { id: "l3q17a2", text: "1,9 giờ", isCorrect: false },
+      { id: "l3q17a3", text: "2 giờ", isCorrect: true },
+      { id: "l3q17a4", text: "2,1 giờ", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q18",
+    text: "Một trường học có 840 học sinh. Tỷ lệ học sinh nam và học sinh nữ là 4:3. Hỏi trường học có bao nhiêu học sinh nam và bao nhiêu học sinh nữ?",
+    answers: [
+      { id: "l3q18a1", text: "480 nam và 360 nữ", isCorrect: true },
+      { id: "l3q18a2", text: "360 nam và 480 nữ", isCorrect: false },
+      { id: "l3q18a3", text: "420 nam và 420 nữ", isCorrect: false },
+      { id: "l3q18a4", text: "490 nam và 350 nữ", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q19",
+    text: "Một hình chữ nhật có chu vi 60m và diện tích 216m². Hỏi hình chữ nhật đó có chiều dài và chiều rộng là bao nhiêu mét?",
+    answers: [
+      { id: "l3q19a1", text: "24m và 9m", isCorrect: true },
+      { id: "l3q19a2", text: "18m và 12m", isCorrect: false },
+      { id: "l3q19a3", text: "27m và 8m", isCorrect: false },
+      { id: "l3q19a4", text: "20m và 10m", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
+  {
+    id: "l3q20",
+    text: "Một người gửi tiết kiệm 5.000 đồng với lãi suất 6% một năm. Sau 3 năm không rút tiền và lãi, tổng số tiền người đó nhận được là bao nhiêu? (Công thức: Tổng = Gốc × (1 + Lãi suất)^n, với n là số năm)",
+    answers: [
+      { id: "l3q20a1", text: "5.900 đồng", isCorrect: false },
+      { id: "l3q20a2", text: "5.954,5 đồng", isCorrect: false },
+      { id: "l3q20a3", text: "5.973,64 đồng", isCorrect: true },
+      { id: "l3q20a4", text: "6.000 đồng", isCorrect: false },
+    ],
+    difficulty: "hard",
+  },
 ];
 
 export default level3Questions;

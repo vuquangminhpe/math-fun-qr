@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { GetStaticProps } from "next";
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 import QRCode from "@/components/shared/QRCode";
+import PasswordModal from "@/components/shared/PasswordModal";
 import { levelInfo } from "@/data/questionService";
 import { LevelInfo } from "@/types";
 import "../components/styles/Home.css"; // Import CSS module for styling
@@ -13,14 +14,46 @@ interface HomeProps {
 }
 
 export default function Home({ baseUrl, levels }: HomeProps) {
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+
+  const handleTeacherClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowPasswordModal(true);
+  };
+
   return (
     <Layout title="Toán Vui Tiểu Học" showHomeButton={false}>
+      {showPasswordModal && (
+        <PasswordModal onClose={() => setShowPasswordModal(false)} />
+      )}
+
       <section className="hero-section">
         <h2 className="hero-title">Học toán thật vui!</h2>
         <p className="hero-subtitle">
           Chọn cấp độ phù hợp với khả năng của bạn và bắt đầu giải toán ngay
           nào!
         </p>
+
+        <div className="teacher-section">
+          <a href="#" onClick={handleTeacherClick} className="teacher-link">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              style={{ marginRight: "8px" }}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Dành cho giáo viên: Xem lịch sử làm bài
+          </a>
+        </div>
       </section>
 
       {/* QR Code cho trang chủ */}

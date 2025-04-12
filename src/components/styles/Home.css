@@ -308,3 +308,33 @@
     opacity: 1;
   }
 }
+
+/* Teacher link section */
+.teacher-section {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.teacher-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #e0f2fe;
+  border: 1px solid #0ea5e9;
+  color: #0284c7;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.teacher-link:hover {
+  background-color: #bae6fd;
+  color: #0369a1;
+}
+
+.teacher-link svg {
+  display: inline-block;
+  vertical-align: middle;
+}

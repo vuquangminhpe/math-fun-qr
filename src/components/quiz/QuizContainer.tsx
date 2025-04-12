@@ -10,6 +10,18 @@ interface QuizContainerProps {
   questionsCount?: number;
 }
 
+// Interface để lưu kết quả bài làm
+interface QuizResult {
+  id: string;
+  studentName: string;
+  level: number;
+  score: number;
+  totalQuestions: number;
+  accuracy: number;
+  date: string;
+  timestamp: number;
+}
+
 const QuizContainer: React.FC<QuizContainerProps> = ({
   level,
   questionsCount = 10, // Tăng số lượng câu hỏi lên 10
@@ -21,6 +33,8 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(true);
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false);
+  const [studentName, setStudentName] = useState("");
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
 
   // Lấy câu hỏi khi component được tạo
   useEffect(() => {
@@ -86,9 +100,43 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
 
   // Hiển thị kết quả
   const showFinalResult = () => {
+    setShowNamePrompt(true);
+  };
+
+  // Lưu kết quả vào localStorage
+  const saveQuizResult = (name: string) => {
     const finalScore = calculateScore();
     setScore(finalScore);
+
+    // Tạo kết quả bài làm
+    const accuracy = Math.round((finalScore / questions.length) * 100);
+    const now = new Date();
+    const quizResult: QuizResult = {
+      id: `quiz_${now.getTime()}`,
+      studentName: name || "Học sinh không tên",
+      level,
+      score: finalScore,
+      totalQuestions: questions.length,
+      accuracy,
+      date: now.toLocaleString("vi-VN"),
+      timestamp: now.getTime(),
+    };
+
+    // Lấy danh sách kết quả cũ từ localStorage
+    const savedResults = localStorage.getItem("quizResults");
+    const quizResults: QuizResult[] = savedResults
+      ? JSON.parse(savedResults)
+      : [];
+
+    // Thêm kết quả mới vào đầu danh sách
+    quizResults.unshift(quizResult);
+
+    // Lưu lại vào localStorage
+    localStorage.setItem("quizResults", JSON.stringify(quizResults));
+
+    // Hiển thị kết quả
     setShowResult(true);
+    setShowNamePrompt(false);
   };
 
   // Xử lý khi bắt đầu làm lại bài
@@ -111,6 +159,51 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
+      </div>
+    );
+  }
+
+  // Hiển thị form nhập tên
+  if (showNamePrompt) {
+    return (
+      <div className="result-card">
+        <h2 className="result-title">Nhập tên của bạn</h2>
+        <p className="result-message">
+          Vui lòng nhập tên để lưu kết quả bài làm
+        </p>
+
+        <div style={{ margin: "20px 0" }}>
+          <input
+            type="text"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+            placeholder="Nhập tên của bạn"
+            className="name-input"
+            style={{
+              padding: "10px",
+              borderRadius: "0.5rem",
+              border: "1px solid #e5e7eb",
+              width: "100%",
+              fontSize: "1rem",
+            }}
+          />
+        </div>
+
+        <div className="result-actions">
+          <button
+            className="result-button restart-button"
+            onClick={() => saveQuizResult(studentName)}
+          >
+            Lưu kết quả
+          </button>
+          <button
+            className="result-button home-button"
+            onClick={() => setShowNamePrompt(false)}
+            style={{ marginLeft: "10px" }}
+          >
+            Quay lại
+          </button>
+        </div>
       </div>
     );
   }
