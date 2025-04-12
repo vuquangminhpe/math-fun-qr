@@ -8,6 +8,7 @@ interface QuestionProps {
   questionNumber: number;
   totalQuestions: number;
   userSelectedAnswer?: string;
+  showFeedbackImmediately?: boolean; // Added this property
 }
 
 const Question: React.FC<QuestionProps> = ({
@@ -16,6 +17,7 @@ const Question: React.FC<QuestionProps> = ({
   questionNumber,
   totalQuestions,
   userSelectedAnswer,
+  showFeedbackImmediately = false, // Default to false
 }) => {
   // Xử lý khi người dùng chọn đáp án
   const handleSelectAnswer = (answerId: string) => {
@@ -69,11 +71,22 @@ const Question: React.FC<QuestionProps> = ({
 
         <div className="answer-options">
           {question.answers.map((answer, index) => {
-            // Người dùng chỉ thấy mình đã chọn đáp án nào
-            // Không hiển thị đáp án đúng/sai ngay lập tức
             let optionClass = "answer-option";
+
             if (userSelectedAnswer === answer.id) {
               optionClass += " selected";
+
+              // Add feedback classes if immediate feedback is enabled
+              if (showFeedbackImmediately) {
+                optionClass += answer.isCorrect ? " correct" : " incorrect";
+              }
+            } else if (
+              showFeedbackImmediately &&
+              userSelectedAnswer &&
+              answer.isCorrect
+            ) {
+              // Highlight the correct answer when user has selected a different answer
+              optionClass += " correct";
             }
 
             return (

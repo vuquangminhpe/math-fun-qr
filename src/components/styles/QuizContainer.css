@@ -271,3 +271,88 @@
     opacity: 1;
   }
 }
+
+/* Level recommendation styles */
+.level-recommendation {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.recommendation-banner {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.recommendation-icon {
+  padding: 0.5rem;
+  background-color: #dbeafe;
+  color: #1e40af;
+  border-radius: 9999px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.recommendation-text h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+}
+
+.recommendation-text p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0;
+}
+
+.try-recommended-level-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+  border: none;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.try-recommended-level-btn.level-1-btn {
+  background-color: #10b981;
+}
+
+.try-recommended-level-btn.level-1-btn:hover {
+  background-color: #059669;
+}
+
+.try-recommended-level-btn.level-2-btn {
+  background-color: #3b82f6;
+}
+
+.try-recommended-level-btn.level-2-btn:hover {
+  background-color: #2563eb;
+}
+
+.try-recommended-level-btn.level-3-btn {
+  background-color: #8b5cf6;
+}
+
+.try-recommended-level-btn.level-3-btn:hover {
+  background-color: #7c3aed;
+}
+
+.view-rankings-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.view-rankings-button:hover {
+  background-color: #2563eb;
+}

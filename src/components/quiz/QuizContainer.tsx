@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Question as QuestionType } from "@/types";
 import Question from "./Question";
 import { getRandomQuestions } from "@/data/questionService";
@@ -8,6 +11,11 @@ import Link from "next/link";
 interface QuizContainerProps {
   level: number;
   questionsCount?: number;
+  // Add the missing properties from MultiplayerPage
+  timePerQuestion?: number;
+  players?: any[];
+  isMultiplayer?: boolean;
+  onComplete?: (results: any) => void;
 }
 
 // Interface để lưu kết quả bài làm
@@ -25,7 +33,12 @@ interface QuizResult {
 const QuizContainer: React.FC<QuizContainerProps> = ({
   level,
   questionsCount = 10, // Tăng số lượng câu hỏi lên 10
+  timePerQuestion = 30, // Default value
+  players = [], // Default empty array
+  isMultiplayer = false, // Default to false
+  onComplete, // Optional callback
 }) => {
+  const router = useRouter();
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
@@ -35,6 +48,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
   const [allQuestionsAnswered, setAllQuestionsAnswered] = useState(false);
   const [studentName, setStudentName] = useState("");
   const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(timePerQuestion); // Add timer state
 
   // Lấy câu hỏi khi component được tạo
   useEffect(() => {
@@ -63,6 +77,41 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     }
   }, [userAnswers, questions]);
 
+  // Add timer effect for multiplayer mode
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (isMultiplayer && !showResult && questions.length > 0) {
+      setTimeLeft(timePerQuestion);
+
+      timer = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 1) {
+            // Time's up, auto-submit current answer or move to next question
+            if (currentQuestionIndex < questions.length - 1) {
+              setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+              return timePerQuestion;
+            } else if (!showResult) {
+              // End of quiz
+              showFinalResult();
+            }
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [
+    currentQuestionIndex,
+    isMultiplayer,
+    showResult,
+    questions,
+    timePerQuestion,
+  ]);
+
   // Xử lý khi người dùng trả lời câu hỏi
   const handleAnswer = (questionId: string, answerId: string) => {
     // Lưu câu trả lời của người dùng nhưng chưa tính điểm
@@ -75,6 +124,9 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     if (currentQuestionIndex < questions.length - 1) {
       setTimeout(() => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+        if (isMultiplayer) {
+          setTimeLeft(timePerQuestion); // Reset timer for multiplayer mode
+        }
       }, 500);
     }
   };
@@ -100,7 +152,39 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
 
   // Hiển thị kết quả
   const showFinalResult = () => {
-    setShowNamePrompt(true);
+    if (isMultiplayer) {
+      const finalScore = calculateScore();
+      if (onComplete) {
+        // For multiplayer mode, call the onComplete callback
+        onComplete(
+          players.map((player) => ({
+            playerId: player.id,
+            score: finalScore, // In a real multiplayer scenario, each player would have their own score
+          }))
+        );
+      }
+    } else {
+      // Single player flow
+      setShowNamePrompt(true);
+    }
+  };
+
+  // Lấy cấp độ đề xuất dựa trên độ chính xác
+  const getRecommendedLevel = (accuracy: number): number => {
+    if (accuracy < 40) return 1;
+    if (accuracy < 60) return 2;
+    return 3;
+  };
+
+  // Lấy thông báo đề xuất
+  const getLevelRecommendation = (accuracy: number): string => {
+    if (accuracy < 40) {
+      return "Bạn nên luyện tập thêm cấp độ 1 để nâng cao kỹ năng cơ bản.";
+    } else if (accuracy < 60) {
+      return "Bạn có thể thử thách bản thân với cấp độ 2.";
+    } else {
+      return "Bạn đã sẵn sàng cho những thử thách khó hơn ở cấp độ 3!";
+    }
   };
 
   // Lưu kết quả vào localStorage
@@ -139,6 +223,16 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     setShowNamePrompt(false);
   };
 
+  // Chuyển hướng đến level được đề xuất
+  const navigateToLevel = (recommendedLevel: number) => {
+    router.push(`/level${recommendedLevel}`);
+  };
+
+  // Chuyển hướng đến bảng xếp hạng
+  const viewRankings = () => {
+    router.push(`/rankings?level=${level}`);
+  };
+
   // Xử lý khi bắt đầu làm lại bài
   const handleRestart = () => {
     const newQuestions = getRandomQuestions(level, questionsCount);
@@ -148,11 +242,17 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     setScore(0);
     setShowResult(false);
     setAllQuestionsAnswered(false);
+    if (isMultiplayer) {
+      setTimeLeft(timePerQuestion);
+    }
   };
 
   // Xử lý khi chọn câu hỏi cụ thể từ thanh chỉ báo
   const handleSelectQuestion = (index: number) => {
     setCurrentQuestionIndex(index);
+    if (isMultiplayer) {
+      setTimeLeft(timePerQuestion);
+    }
   };
 
   if (loading) {
@@ -169,7 +269,8 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
       <div className="result-card">
         <h2 className="result-title">Nhập tên của bạn</h2>
         <p className="result-message">
-          Vui lòng nhập tên để lưu kết quả bài làm
+          Vui lòng nhập tên để lưu kết quả bài làm và xuất hiện trong bảng xếp
+          hạng
         </p>
 
         <div style={{ margin: "20px 0" }}>
@@ -211,6 +312,7 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
   // Hiển thị kết quả
   if (showResult) {
     const accuracy = Math.round((score / questions.length) * 100);
+    const recommendedLevel = getRecommendedLevel(accuracy);
 
     return (
       <div className="result-card">
@@ -229,6 +331,40 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
               : "Hãy cố gắng luyện tập thêm nhé!"}
           </p>
           <p className="result-accuracy">Chính xác: {accuracy}%</p>
+        </div>
+
+        {/* Đề xuất cấp độ */}
+        <div className="level-recommendation">
+          <div className="recommendation-banner">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="recommendation-icon"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+              />
+            </svg>
+            <div className="recommendation-text">
+              <h3>Đề xuất cho bạn:</h3>
+              <p>{getLevelRecommendation(accuracy)}</p>
+            </div>
+          </div>
+
+          {level !== recommendedLevel && (
+            <button
+              className={`try-recommended-level-btn level-${recommendedLevel}-btn`}
+              onClick={() => navigateToLevel(recommendedLevel)}
+            >
+              Thử ngay cấp độ {recommendedLevel}
+            </button>
+          )}
         </div>
 
         {/* Chi tiết từng câu hỏi */}
@@ -294,6 +430,12 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
           >
             Làm lại
           </button>
+          <button
+            className="result-button view-rankings-button"
+            onClick={viewRankings}
+          >
+            Xem xếp hạng
+          </button>
           <Link href="/" passHref>
             <a className="result-button home-button">Về trang chủ</a>
           </Link>
@@ -304,6 +446,33 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
 
   return (
     <div className="quiz-container">
+      {/* Timer for multiplayer mode */}
+      {isMultiplayer && (
+        <div className="timer-container">
+          <div className="timer">
+            <div className="timer-icon">⏱️</div>
+            <div className="timer-value">{timeLeft}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Player info for multiplayer mode */}
+      {isMultiplayer && players.length > 0 && (
+        <div className="players-container">
+          {players.map((player) => (
+            <div key={player.id} className="player-info">
+              <div
+                className="player-avatar"
+                style={{ backgroundColor: player.color }}
+              >
+                {player.name.charAt(0)}
+              </div>
+              <div className="player-name">{player.name}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Hiển thị câu hỏi hiện tại */}
       <div className="question-container">
         <Question

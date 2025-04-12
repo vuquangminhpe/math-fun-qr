@@ -34,25 +34,92 @@ export default function Home({ baseUrl, levels }: HomeProps) {
           nào!
         </p>
 
-        <div className="teacher-section">
-          <a href="#" onClick={handleTeacherClick} className="teacher-link">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              style={{ marginRight: "8px" }}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            Dành cho giáo viên: Xem lịch sử làm bài
-          </a>
+        <div className="navigation-links">
+          <div className="teacher-section">
+            <a href="#" onClick={handleTeacherClick} className="teacher-link">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ marginRight: "8px" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Dành cho giáo viên
+            </a>
+          </div>
+
+          <div className="student-section">
+            <Link href="/rankings" className="rankings-link">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ marginRight: "8px" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                />
+              </svg>
+              Bảng xếp hạng
+            </Link>
+          </div>
+
+          <div className="challenge-section">
+            <Link href="/daily-challenge" className="challenge-link">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ marginRight: "8px" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Thử thách hàng ngày
+              <span className="challenge-badge">Mới</span>
+            </Link>
+          </div>
+
+          <div className="multiplayer-section">
+            <Link href="/multiplayer" className="multiplayer-link">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                style={{ marginRight: "8px" }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              Chế độ thi đấu
+              <span className="challenge-badge">Mới</span>
+            </Link>
+          </div>
         </div>
       </section>
 
