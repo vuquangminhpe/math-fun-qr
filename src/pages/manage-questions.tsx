@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Layout from "@/components/layout/Layout";
-import HistoryView from "@/components/shared/HistoryView";
+import QuestionManager from "@/components/shared/QuestionManager";
 
-interface HistoryProps {
+interface ManageQuestionsProps {
   baseUrl: string;
 }
 
-export default function History({ baseUrl }: HistoryProps) {
+export default function ManageQuestions({ baseUrl }: ManageQuestionsProps) {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,22 +45,22 @@ export default function History({ baseUrl }: HistoryProps) {
   }
 
   return (
-    <Layout title="Lịch sử làm bài" showHomeButton={true}>
+    <Layout title="Quản lý câu hỏi" showHomeButton={true}>
       <div
-        className="history-page-intro"
+        className="manage-questions-intro"
         style={{
-          backgroundColor: "#f0f9ff",
+          backgroundColor: "#ecfdf5",
           padding: "1rem",
           borderRadius: "0.5rem",
           marginBottom: "1.5rem",
-          borderLeft: "4px solid #0ea5e9",
+          borderLeft: "4px solid #10b981",
         }}
       >
         <div style={{ display: "flex", alignItems: "flex-start" }}>
           <div
             style={{
-              backgroundColor: "#e0f2fe",
-              color: "#0284c7",
+              backgroundColor: "#d1fae5",
+              color: "#047857",
               borderRadius: "9999px",
               padding: "0.5rem",
               marginRight: "0.75rem",
@@ -80,7 +80,7 @@ export default function History({ baseUrl }: HistoryProps) {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
               />
             </svg>
           </div>
@@ -92,17 +92,18 @@ export default function History({ baseUrl }: HistoryProps) {
                 color: "#1f2937",
               }}
             >
-              Lịch sử làm bài:
+              Công cụ quản lý câu hỏi:
             </h3>
             <p style={{ color: "#4b5563" }}>
-              Xem kết quả bài làm của học sinh trong 24 giờ qua. Bạn có thể lọc
-              theo cấp độ để xem chi tiết hơn.
+              Thêm, sửa, xóa câu hỏi trong ngân hàng đề. Các thay đổi sẽ được
+              lưu trong 24 giờ. Sau thời gian này, hệ thống sẽ khôi phục về dữ
+              liệu mặc định.
             </p>
           </div>
         </div>
       </div>
 
-      <HistoryView />
+      <QuestionManager />
     </Layout>
   );
 }
