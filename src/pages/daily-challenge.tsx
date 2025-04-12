@@ -1,16 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
-import { GetStaticProps } from "next";
 import Layout from "@/components/layout/Layout";
 import DailyChallenge from "@/components/shared/DailyChallenge";
 
-interface DailyChallengePageProps {
-  baseUrl: string;
-}
-
-export default function DailyChallengePage({
-  baseUrl,
-}: DailyChallengePageProps) {
+export default function DailyChallengePage() {
   return (
     <Layout title="Thử thách hàng ngày" showHomeButton={true}>
       <div className="daily-challenge-page">
@@ -46,16 +39,3 @@ export default function DailyChallengePage({
     </Layout>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const baseUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://math-fun-qr.vercel.app";
-
-  return {
-    props: {
-      baseUrl,
-    },
-  };
-};
