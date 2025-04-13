@@ -155,13 +155,32 @@ const QuizContainer: React.FC<QuizContainerProps> = ({
     if (isMultiplayer) {
       const finalScore = calculateScore();
       if (onComplete) {
-        // For multiplayer mode, call the onComplete callback
-        onComplete(
-          players.map((player) => ({
+        // Đảm bảo từng người chơi có thông tin kết quả đầy đủ
+        const multiplayerResults = players.map((player) => {
+          // Trong môi trường thực, mỗi người chơi sẽ có điểm số riêng
+          // Tạm thời gán điểm số giống nhau cho các người chơi
+          return {
             playerId: player.id,
-            score: finalScore, // In a real multiplayer scenario, each player would have their own score
-          }))
-        );
+            score: finalScore,
+            correctAnswers: finalScore, // Số câu trả lời đúng
+            totalQuestions: questions.length,
+            answers: Object.keys(userAnswers).map((questionId) => {
+              const answerId = userAnswers[questionId];
+              const question = questions.find((q) => q.id === questionId);
+              const selectedAnswer = question?.answers.find(
+                (a) => a.id === answerId
+              );
+              return {
+                questionId,
+                answerId,
+                isCorrect: selectedAnswer?.isCorrect || false,
+              };
+            }),
+          };
+        });
+
+        // Gọi callback để hiển thị kết quả
+        onComplete(multiplayerResults);
       }
     } else {
       // Single player flow

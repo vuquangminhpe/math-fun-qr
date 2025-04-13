@@ -42,6 +42,7 @@ interface Room {
   createdAt: number;
   settings: GameSettings;
   isPublic: boolean;
+  gameStarted?: boolean; // Optional game started status
 }
 
 interface MultiplayerModeProps {
@@ -193,11 +194,25 @@ const MultiplayerMode: React.FC<MultiplayerModeProps> = ({
         // Cập nhật thông tin người chơi và tin nhắn chat
         setPlayers(currentRoom.players);
         setChatMessages(currentRoom.messages);
+
+        // Kiểm tra trạng thái phòng
+        if (currentRoom.gameStarted && !localPlayer.isHost) {
+          // Nếu phòng đã bắt đầu và người chơi không phải host
+          // thì cũng bắt đầu trò chơi trên client của họ
+          const activePlayers = currentRoom.players.filter(
+            (player) => !player.isSpectator
+          );
+          onStartGame(activePlayers, currentRoom.settings);
+        }
+      } else {
+        // Nếu không tìm thấy phòng (đã bị xóa), hiển thị thông báo và quay lại
+        alert("Phòng đã bị đóng bởi chủ phòng");
+        onCancel();
       }
-    }, 3000);
+    }, 1000); // Giảm thời gian đồng bộ xuống 1 giây cho nhanh hơn
 
     return () => clearInterval(interval);
-  }, [roomCode, localPlayer, getRoomByCode]);
+  }, [roomCode, localPlayer, onStartGame, onCancel]);
 
   // Tạo phòng mới với mã ngẫu nhiên
   const createRoom = () => {
@@ -411,16 +426,25 @@ const MultiplayerMode: React.FC<MultiplayerModeProps> = ({
 
   // Bắt đầu trò chơi (chỉ dành cho host)
   const startGame = () => {
-    // Chỉ bắt đầu khi tất cả người chơi đã sẵn sàng
-    if (
-      players.every(
-        (player) =>
-          player.isReady || player.isSpectator || player.id === localPlayer?.id
-      )
-    ) {
+    // Kiểm tra xem tất cả người chơi đã sẵn sàng chưa
+    const allPlayersReady = players.every(
+      (player) =>
+        player.isReady || player.isSpectator || player.id === localPlayer?.id
+    );
+
+    if (allPlayersReady) {
       // Lưu trạng thái trò chơi trước khi bắt đầu
       const currentRoom = getRoomByCode(roomCode);
       if (currentRoom) {
+        // Thêm trạng thái gameStarted vào phòng
+        const updatedRoom = {
+          ...currentRoom,
+          gameStarted: true,
+        };
+
+        updateRoom(updatedRoom);
+
+        // Lưu thông tin phòng hiện tại để có thể quay lại sau khi chơi xong
         localStorage.setItem(
           "currentGameRoom",
           JSON.stringify({
